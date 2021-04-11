@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    app: flask-app
+spec:
+  replicas: 2
+  selector: #matches all labels app: xxx to create connection (i.e. selectors match with labels)
+    matchLabels:
+      app: flask-app
+  # config for a pod
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec: 
+      containers:
+      - name: flask-app
+        image: xzarem/flask-app:flask-app
+        ports:
+        - containerPort: 5000
+        env:
+        - name: API_USER
+          valueFrom:
+            configMapKeyRef:
+              name: flask-app-configmap
+              key: user
+        - name: SECRET
+          valueFrom:
+            secretKeyRef:
+              name: flask-app-secret
+              key: mysecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  selector:
+    app: flask-app
+  ports:
+  - protocol: TCP
+    port: 8888
+    targetPort: 5000
+    nodePort: 30000
+  type: LoadBalancer
