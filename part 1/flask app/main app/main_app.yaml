@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: string-gen
+spec:
+  replicas: 1
+  selector: #matches all labels app: xxx to create connection (i.e. selectors match with labels)
+    matchLabels:
+      app: string-gen
+  # config for a pod
+  template:
+    metadata:
+      labels:
+        app: string-gen
+    spec: 
+      containers:
+      - name: string-gen
+        image: xzarem/string-gen:string-gen
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: main-app-service
+spec:
+  selector:
+    app: string-gen
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+    # nodePort: 30000

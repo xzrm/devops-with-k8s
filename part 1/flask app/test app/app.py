@@ -9,7 +9,7 @@ SECRET = os.getenv('SECRET')
 
 @app.route('/')
 def index():
-    return "helllo {user}".format(user=USER)
+    return "hello {user}".format(user=USER)
 
 @app.route('/secret')
 def secret():
