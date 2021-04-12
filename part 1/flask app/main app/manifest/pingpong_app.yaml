@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pong-app
+spec:
+  replicas: 1
+  selector: #matches all labels app: xxx to create connection (i.e. selectors match with labels)
+    matchLabels:
+      app: pong
+  # config for a pod
+  template:
+    metadata:
+      labels:
+        app: pong
+    spec: 
+      containers:
+      - name: pong
+        image: xzarem/pong:pong
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pong-app-service
+spec:
+  selector:
+    app: pong
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 5000

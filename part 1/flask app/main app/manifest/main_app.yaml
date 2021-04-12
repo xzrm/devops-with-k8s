@@ -28,6 +28,5 @@ spec:
     app: string-gen
   ports:
   - protocol: TCP
-    port: 80
+    port: 8000
     targetPort: 5000
-    # nodePort: 30000
