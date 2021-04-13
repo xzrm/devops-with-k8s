@@ -13,11 +13,18 @@ spec:
       labels:
         app: pong
     spec: 
+      volumes:
+      - name: shared-counter
+        persistentVolumeClaim:
+          claimName: counter-claim
       containers:
       - name: pong
-        image: xzarem/pong:pong
+        image: xzarem/pong@sha256:9a6d80c3e16dcb55c50f46fcad1064d5bf5df439f9dd0103e7fe44eae3b261f6
         ports:
         - containerPort: 5000
+        volumeMounts:
+        - mountPath: /usr/src/app/files
+          name: shared-counter
 ---
 apiVersion: v1
 kind: Service

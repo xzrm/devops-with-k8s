@@ -13,11 +13,18 @@ spec:
       labels:
         app: string-gen
     spec: 
+      volumes:
+      - name: shared-counter
+        persistentVolumeClaim:
+          claimName: counter-claim
       containers:
       - name: string-gen
-        image: xzarem/string-gen:string-gen
+        image: xzarem/string-gen@sha256:a5cabe96bac7224d7d0e92799d91959110b51789f56d58953b89976897fec48d
         ports:
         - containerPort: 5000
+        volumeMounts:
+        - mountPath: /usr/src/app/files
+          name: shared-counter
 ---
 apiVersion: v1
 kind: Service
