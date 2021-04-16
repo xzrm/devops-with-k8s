@@ -4,9 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-
-# USER = os.getenv('API_USER')
-# SECRET = os.getenv('SECRET')
 db_user = os.environ.get('POSTGRES_USER')
 db_psw = os.environ.get('POSTGRES_PASSWORD')
 db_name = os.environ.get('POSTGRES_DB')
@@ -31,8 +28,6 @@ class Todo(db.Model):
 
 db.create_all()
 db.session.commit()
-
-# todos = []
 
 @app.route('/')
 def index():
