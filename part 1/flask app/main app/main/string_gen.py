@@ -7,19 +7,17 @@ import requests
 from time import sleep
 from concurrent.futures import ThreadPoolExecutor
 
+app = Flask(__name__)
+
 path = os.path.join('/', 'usr', 'src' ,'app', 'files')
 if not os.path.exists(path):
     os.makedirs(path)
 
+message = os.getenv('MESSAGE')
 file_path = os.path.join(path, 'count.txt')
-
-app = Flask(__name__)
-
-executor = ThreadPoolExecutor(1)
-
 letters = string.ascii_lowercase
-
 logs = []
+executor = ThreadPoolExecutor(1)
 
 def generate_random_string():
     while True:
@@ -39,11 +37,10 @@ def read_file(path):
 
 @app.route('/')
 def index():
-    # txt = read_file(file_path)
     response = requests.get('http://pong-app-service:8000/count')
     count = response.json()
     try:
-        return "<p>{}</p>  <p>Ping / Pong: {}</p>".format(logs[-1], count['count'])
+        return "<p>{}</p> <p>{}</p>  <p>Ping / Pong: {}</p>".format( message,logs[-1], count['count'])
     except IndexError as error:
         return "no logs available"
 

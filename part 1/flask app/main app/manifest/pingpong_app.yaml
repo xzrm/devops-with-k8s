@@ -19,12 +19,17 @@ spec:
           claimName: counter-claim
       containers:
       - name: pong
-        image: xzarem/pong@sha256:9a6d80c3e16dcb55c50f46fcad1064d5bf5df439f9dd0103e7fe44eae3b261f6
+        image: xzarem/pong@sha256:d5429bfc2c0d17a0c1fd3137be1eb7a9a6603dc4fad6c197e5faa512fcfa6db0
         ports:
         - containerPort: 5000
         volumeMounts:
         - mountPath: /usr/src/app/files
           name: shared-counter
+        envFrom:
+          # - configMapRef:
+          #     name: postgres-config
+          - secretRef:
+              name: postgres-secret
 ---
 apiVersion: v1
 kind: Service

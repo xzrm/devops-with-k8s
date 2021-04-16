@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flask-app-configmap
+  namespace: todo-app
+data:
+  user: maciejjjj
