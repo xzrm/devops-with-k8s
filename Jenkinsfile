@@ -9,8 +9,7 @@ pipeline {
                 sh 'cd "main app/main" ' 
                 sh "pwd"
                 echo "${env.GIT_COMMIT}" 
-                echo "${WORKSPACE}"
-                sh "docker build ./Dockerfile -t xzarem/string-gen:${DOCKER_TAG}"
+                sh 'docker build . -t xzarem/string-gen:string-gen -f "${WORKSPACE}/main app/main/Dockerfile" ' 
             }
         }
     }
