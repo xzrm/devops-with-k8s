@@ -6,8 +6,8 @@ pipeline {
     stages {
         stage("Building Docker Image"){
             steps{
-                echo "Hello world"
-                echo "${DOCKER_TAG}"
+                sh 'cd "main app/main" ' 
+                sh "docker build -t xzarem/string-gen:${DOCKER_TAG} ."
             }
         }
     }
