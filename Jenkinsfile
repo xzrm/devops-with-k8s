@@ -8,6 +8,7 @@ pipeline {
             steps{
                 sh 'cd "main app/main" ' 
                 sh "pwd"
+                echo "${env.GIT_COMMIT}" 
                 sh "docker build . -t xzarem/string-gen:${DOCKER_TAG}"
             }
         }
