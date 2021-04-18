@@ -10,7 +10,7 @@ pipeline {
                 sh "pwd"
                 echo "${env.GIT_COMMIT}" 
                 echo "${WORKSPACE}"
-                sh "docker build . -t xzarem/string-gen:${DOCKER_TAG}"
+                sh "docker build ./Dockerfile -t xzarem/string-gen:${DOCKER_TAG}"
             }
         }
     }
