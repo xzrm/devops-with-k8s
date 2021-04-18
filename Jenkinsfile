@@ -14,6 +14,6 @@ pipeline {
 }
 
 def getDockerTag(){
-    def tag = sh script: 'get rev-parse HEAD', returnStout: true
+    def tag = sh script: 'get rev-parse HEAD', returnStdout: true
     return tag
 }
