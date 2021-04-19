@@ -17,5 +17,14 @@ pipeline {
                     }               
             }
         }
+        stage("Deploy to k8s"){
+            steps{
+                dir("${WORKSPACE}/main app/manifest") {
+                    sh "chmod +x changeTag.sh"
+                    sh "./changeTag.sh ${env.GIT_COMMIT}"
+                    sh "kubectl apply -f main_app.yaml"
+                }
+            }
+        }
     }
 }
