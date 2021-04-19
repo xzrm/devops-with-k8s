@@ -9,5 +9,14 @@ pipeline {
                  }
             }
         }
+        {
+        stage("Docker hub push"){
+            withCredentials([string(credentialsId: 'docker-hub', variable: 'DockerHubPwd')]) {
+                sh "docker login -u xzarem -p {$DockerHubPwd}"
+                sh "docker push xzarem/string-gen:${env.GIT_COMMIT}"
+                }
+            
+            }
+        }
     }
 }
