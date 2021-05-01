@@ -25,8 +25,8 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
 
       - run: |
-          docker build . -t ${{ secrets.ACR_NAME }}/demo-project:latest
-          docker push ${{ secrets.ACR_NAME }}/demo-project:latest
+          docker build . -t ${{ secrets.ACR_NAME }}/demo-project:{{ github.sha }}
+          docker push ${{ secrets.ACR_NAME }}/demo-project:{{ github.sha }}
           
           
       
@@ -49,6 +49,6 @@ jobs:
           manifests: |
             ./project/manifest/flask-app-test.yaml
           images: |
-            acrmk.azurecr.io/demo-project:latest
+            acrmk.azurecr.io/demo-project:{{ github.sha }}
           imagepullsecrets: |
             k8s-secret
