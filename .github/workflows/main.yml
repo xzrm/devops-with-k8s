@@ -27,3 +27,19 @@ jobs:
       - run: |
           docker build . -t ${{ secrets.ACR_NAME }}/demo-project:latest
           docker push ${{ secrets.ACR_NAME }}/demo-project:latest
+          
+          
+      
+      - name: Set the target AKS cluster
+        uses: Azure/aks-set-context@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          cluster-name: AKSClustermk
+          resource-group: ResourceGroupDemo
+
+      - uses: Azure/k8s-create-secret@v1
+        with:
+          container-registry-url: ${{ secrets.ACR_NAME }}
+          container-registry-username: ${{ secrets.ACR_LOGIN }}
+          container-registry-password: ${{ secrets.ACR_PASSWORD }}
+          secret-name: k8s-secret
