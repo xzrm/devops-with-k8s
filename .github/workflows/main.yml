@@ -43,3 +43,12 @@ jobs:
           container-registry-username: ${{ secrets.ACR_LOGIN }}
           container-registry-password: ${{ secrets.ACR_PASSWORD }}
           secret-name: k8s-secret
+          
+      - uses: Azure/k8s-deploy@v1
+        with:
+          manifests: |
+            ./project/manifests/flask-app-test.yaml
+          images: |
+            acrmk.azurecr.io/demo-project:latest
+          imagepullsecrets: |
+            k8s-secret
