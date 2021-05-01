@@ -47,7 +47,7 @@ jobs:
       - uses: Azure/k8s-deploy@v1
         with:
           manifests: |
-            ./project/manifests/flask-app-test.yaml
+            ./project/manifest/flask-app-test.yaml
           images: |
             acrmk.azurecr.io/demo-project:latest
           imagepullsecrets: |
