@@ -7,6 +7,9 @@ on:
 jobs:
   build_push_image:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./project
 
     steps:
       - uses: actions/checkout@v2
@@ -22,5 +25,5 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
 
       - run: |
-          docker build . -t ${{ secrets.ACR_NAME }}/demo-project:latest -f project/Dockerfile
+          docker build . -t ${{ secrets.ACR_NAME }}/demo-project:latest
           docker push ${{ secrets.ACR_NAME }}/demo-project:latest
