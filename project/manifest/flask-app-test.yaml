@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app
-  namespace: todo-app
+#   namespace: todo-app
   labels:
     app: flask-app
 spec:
@@ -18,21 +18,22 @@ spec:
     spec: 
       containers:
       - name: flask-app
-        image: xzarem/flask-app@sha256:f6583b0115b7413de1502f844db14b254640fd630ec83200f28a81690e27b7b4
+        image: acrmk.azurecr.io/demo-project
         ports:
         - containerPort: 5000
-        envFrom:
-          - secretRef:
-              name: postgres-secret
+#         envFrom:
+#           - secretRef:
+#               name: postgres-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: flask-app-svc
-  namespace: todo-app
+#   namespace: todo-app
 spec:
   selector:
     app: flask-app
+  type:  LoadBalancer
   ports:
   - protocol: TCP
     port: 8000
