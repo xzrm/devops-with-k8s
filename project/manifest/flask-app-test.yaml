@@ -21,9 +21,9 @@ spec:
         image: acrmk.azurecr.io/demo-project
         ports:
         - containerPort: 5000
-#         envFrom:
-#           - secretRef:
-#               name: postgres-secret
+        envFrom:
+          - secretRef:
+              name: postgres-secret
 ---
 apiVersion: v1
 kind: Service
