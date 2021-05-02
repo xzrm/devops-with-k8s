@@ -2,7 +2,7 @@ name: Build and push the latest build to staging
 
 on:
   push:
-    branches: [ master ]
+    branches: [ dev ]
 
 jobs:
   build_push_image:
@@ -48,7 +48,10 @@ jobs:
         with:
           manifests: |
             ./project/manifest/flask-app-test.yaml
+            ./project/manifest/postgres/postgres-secret.yaml
+            ./project/manifest/postgres/postgres.yaml
           images: |
             acrmk.azurecr.io/demo-project:${{ github.sha }}
+            postgres:latest
           imagepullsecrets: |
             k8s-secret
