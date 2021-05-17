@@ -39,7 +39,7 @@ spec:
   type:  LoadBalancer
   ports:
   - protocol: TCP
-    port: 8000
+    port: 8001
     targetPort: 5000
 
 
