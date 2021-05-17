@@ -60,5 +60,5 @@ jobs:
           helm upgrade flask-app1 ./flask-app-helm  \
             --install \
             --set image.registry=${{ secrets.ACR_NAME }} \
-            --set image.name: "flask-app1" \
+            --set image.name="flask-app1" \
             --debug
