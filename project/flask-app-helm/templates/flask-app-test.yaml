@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app
+  name: app1
 #   namespace: todo-app
   labels:
     app: flask-app1
@@ -31,7 +31,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: flask-app1-svc
+  name: flask-app1-svc1
 #   namespace: todo-app
 spec:
   selector:
