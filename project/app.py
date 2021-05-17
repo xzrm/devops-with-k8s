@@ -41,7 +41,6 @@ def submit_form():
     todo = Todo(new_todo)
     db.session.add(todo)
     db.session.commit()
-    # todos.append(new_todo)
     return redirect(url_for('index'))
 
 @app.route('/todo')
