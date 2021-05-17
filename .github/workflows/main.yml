@@ -57,7 +57,7 @@ jobs:
           
       - name: Run Helm Deploy
         run: |
-          helm upgrade flask-app1 .project/flask-app-helm  \
+          helm upgrade flask-app1 ./project/flask-app-helm  \
             --install \
             --set image.registry=${{ secrets.ACR_NAME }} \
             --set image.name: "flask-app1" \
