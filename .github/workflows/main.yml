@@ -61,5 +61,5 @@ jobs:
             --install \
             --set image.registry=${{ secrets.ACR_NAME }} \
             --set image.name="flask-app1" \
-            --set image.tag={{ github.sha }}
+            --set image.tag=${{ github.sha }} \
             --debug
