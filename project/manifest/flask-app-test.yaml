@@ -22,7 +22,6 @@ spec:
         # image: acrmk.azurecr.io/demo-project
         # image: xzarem/flask-app1@sha256:e7564aaba5c3aa464592c7b719c6b98c405c63699255c61b8515fa2ab842fc5a
         imagePullPolicy: Always
-        ports:
         - containerPort: 5000
 #         envFrom:
 #           - secretRef:

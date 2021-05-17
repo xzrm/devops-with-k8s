@@ -57,9 +57,9 @@ jobs:
       #       k8s-secret
 
           
-      # - name: Run Helm Deploy
-      #   run: |
-      #     helm upgrade --install flask-app1 ./project/flask-app-helm/templates  \
-      #       --set image.registry=${{ secrets.ACR_NAME }} \
-      #       --set image.name: flask-app1
-      #       --debug
+      - name: Run Helm Deploy
+        run: |
+          helm upgrade --install flask-app1 ./flask-app-helm/templates  \
+            --set image.registry=${{ secrets.ACR_NAME }} \
+            --set image.name: flask-app1
+            --debug

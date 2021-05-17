@@ -4,20 +4,20 @@ metadata:
   name: app
 #   namespace: todo-app
   labels:
-    app: flask-app
+    app: flask-app1
 spec:
   replicas: 1
   selector: #matches all labels app: xxx to create connection (i.e. selectors match with labels)
     matchLabels:
-      app: flask-app
+      app: flask-app1
   # config for a pod
   template:
     metadata:
       labels:
-        app: flask-app
+        app: flask-app1
     spec: 
       containers:
-      - name: flask-app
+      - name: flask-app1
         # image: acrmk.azurecr.io/demo-project
         # image: xzarem/flask-app1@sha256:e7564aaba5c3aa464592c7b719c6b98c405c63699255c61b8515fa2ab842fc5a
         image: {{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
@@ -31,13 +31,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: flask-app-svc
+  name: flask-app1-svc
 #   namespace: todo-app
 spec:
   selector:
-    app: flask-app
-  # type:  LoadBalancer
-  type: ClusterIP
+    app: flask-app1
+  type:  LoadBalancer
   ports:
   - protocol: TCP
     port: 8000
