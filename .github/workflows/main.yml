@@ -2,7 +2,7 @@ name: Build and push the latest build to staging
 
 on:
   push:
-    branches: [ master ]
+    branches: [ helm-test ]
 
 jobs:
   build_push_image:
@@ -25,10 +25,13 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
 
       - run: |
-          docker build . -t ${{ secrets.ACR_NAME }}/demo-project:${{ github.sha }}
-          docker push ${{ secrets.ACR_NAME }}/demo-project:${{ github.sha }}
+          docker build . -t ${{ secrets.ACR_NAME }}/flask-app1:${{ github.sha }}
+          docker push ${{ secrets.ACR_NAME }}/flask-app1:${{ github.sha }}
           
-          
+      - name: Install Helm
+        uses: Azure/setup-helm@v1
+        with:
+          version: v3.3.1
       
       - name: Set the target AKS cluster
         uses: Azure/aks-set-context@v1
@@ -44,11 +47,19 @@ jobs:
           container-registry-password: ${{ secrets.ACR_PASSWORD }}
           secret-name: k8s-secret
           
-      - uses: Azure/k8s-deploy@v1
-        with:
-          manifests: |
-            ./project/manifest/flask-app-test.yaml
-          images: |
-            acrmk.azurecr.io/demo-project:${{ github.sha }}
-          imagepullsecrets: |
-            k8s-secret
+      # - uses: Azure/k8s-deploy@v1
+      #   with:
+      #     manifests: |
+      #       ./project/manifest/flask-app-test.yaml
+      #     images: |
+      #       acrmk.azurecr.io/demo-project:${{ github.sha }}
+      #     imagepullsecrets: |
+      #       k8s-secret
+
+          
+      # - name: Run Helm Deploy
+      #   run: |
+      #     helm upgrade --install flask-app1 ./project/flask-app-helm/templates  \
+      #       --set image.registry=${{ secrets.ACR_NAME }} \
+      #       --set image.name: flask-app1
+      #       --debug

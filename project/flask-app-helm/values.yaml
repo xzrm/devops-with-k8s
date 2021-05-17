@@ -1,0 +1,4 @@
+image:
+  registry: xzarem
+  name: flask-app1
+  tag: latest
