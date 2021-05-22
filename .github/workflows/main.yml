@@ -2,7 +2,7 @@ name: Build and push the latest build to staging
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ aks-deploy-test ]
 
 jobs:
   build_push_image:
