@@ -38,8 +38,7 @@ class Counter(db.Model):
 # def write_to_file(txt):
 #     with open(file_path, "w+") as f:
 #         f.write(txt)
- 
- 
+
 
 db.create_all()
 db.session.commit()
