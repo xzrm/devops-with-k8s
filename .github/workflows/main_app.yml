@@ -6,6 +6,7 @@ on:
       - 'aks-deploy-test'
     paths:
       - 'main app/**'
+      - '.github/workflows/main_app.yml'
 
 jobs:
   build_push_image:
@@ -54,11 +55,10 @@ jobs:
       - uses: Azure/k8s-deploy@v1
         with:
           manifests: |
-            './manifest/pingpong_app.yaml'
-            './main app/manifest/postgres/postgres-secret.yaml'
-
-            './main app/manifest/configmap.yaml'
-            './main app/manifest/main_app.yaml' 
+            ./main app/manifest/postgres/postgres-secret.yaml
+            ./main app/manifest/pingpong_app.yaml
+            ./main app/manifest/configmap.yaml
+            ./main app/manifest/main_app.yaml
 
           images: |
             acrmk.azurecr.io/demo-pingpong-app:${{ github.sha }}
