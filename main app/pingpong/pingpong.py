@@ -40,6 +40,7 @@ class Counter(db.Model):
 #         f.write(txt)
 
 
+
 db.create_all()
 db.session.commit()
 
