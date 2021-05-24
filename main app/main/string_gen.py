@@ -40,7 +40,7 @@ def index():
     response = requests.get('http://pong-app-service:8000/count')
     count = response.json()
     try:
-        return "<p>{}</p> <p>{}</p>  <p>Ping / Pong: {}</p>".format( message,logs[-1], count['count'])
+        return "<p>{}</p> <p>{}</p>  <p>Ping / pong: {}</p>".format( message,logs[-1], count['count'])
     except IndexError as error:
         return "no logs available"
 
