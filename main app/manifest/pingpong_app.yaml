@@ -13,18 +13,18 @@ spec:
       labels:
         app: pong
     spec: 
-      volumes:
-      - name: shared-counter
-        persistentVolumeClaim:
-          claimName: counter-claim
+      # volumes:
+      # - name: shared-counter
+      #   persistentVolumeClaim:
+      #     claimName: counter-claim
       containers:
       - name: pong
-        image: xzarem/pong@sha256:d5429bfc2c0d17a0c1fd3137be1eb7a9a6603dc4fad6c197e5faa512fcfa6db0
+        image: acrmk.azurecr.io/demo-pinpong-app
         ports:
         - containerPort: 5000
-        volumeMounts:
-        - mountPath: /usr/src/app/files
-          name: shared-counter
+        # volumeMounts:
+        # - mountPath: /usr/src/app/files
+        #   name: shared-counter
         envFrom:
           # - configMapRef:
           #     name: postgres-config
@@ -38,6 +38,7 @@ metadata:
 spec:
   selector:
     app: pong
+  type:  LoadBalancer
   ports:
   - protocol: TCP
     port: 8000

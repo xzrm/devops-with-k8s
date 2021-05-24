@@ -2,15 +2,17 @@ name: Build and push the latest build to staging
 
 on:
   push:
+    branches:
+      - 'aks-deploy-test'
     paths:
-      - 'project/**'
+      - 'main/**'
 
 jobs:
   build_push_image:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./project
+        working-directory: ./main
 
     steps:
       - uses: actions/checkout@v2
@@ -26,10 +28,11 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
 
       - run: |
-          docker build . -t ${{ secrets.ACR_NAME }}/demo-project:${{ github.sha }}
-          docker push ${{ secrets.ACR_NAME }}/demo-project:${{ github.sha }}
-          
-          
+          docker build . -t ${{ secrets.ACR_NAME }}/demo-main-app:${{ github.sha }}
+          docker push ${{ secrets.ACR_NAME }}/demo-main-app:${{ github.sha }}
+
+          docker build . -t ${{ secrets.ACR_NAME }}/demo-string-gen:${{ github.sha }}
+          docker push ${{ secrets.ACR_NAME }}/demo-string-gen:${{ github.sha }}
       
       - name: Set the target AKS cluster
         uses: Azure/aks-set-context@v1
@@ -48,11 +51,14 @@ jobs:
       - uses: Azure/k8s-deploy@v1
         with:
           manifests: |
-            ./project/manifest/flask-app-test.yaml
-            ./project/manifest/postgres/postgres-secret.yaml
-            ./project/manifest/postgres/postgres.yaml
+            './main app/manifest/pingpong_app.yaml'
+            './main app/manifest/postgres/postgres-secret.yaml'
+
+            './main app/manifest/configmap.yaml'
+            './main app/manifest/main_app.yaml' 
+
           images: |
-            acrmk.azurecr.io/demo-project:${{ github.sha }}
-            postgres:latest
+            acrmk.azurecr.io/demo-main-app:${{ github.sha }}
+            acrmk.azurecr.io/demo-string-gen:${{ github.sha }}
           imagepullsecrets: |
             k8s-secret

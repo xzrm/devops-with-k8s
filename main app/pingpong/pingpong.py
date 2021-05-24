@@ -5,11 +5,11 @@ from flask_sqlalchemy import SQLAlchemy
 import sys
 import logging
 
-path = os.path.join('/', 'usr', 'src' ,'app', 'files')
-if not os.path.exists(path):
-    os.makedirs(path)
+# path = os.path.join('/', 'usr', 'src' ,'app', 'files')
+# if not os.path.exists(path):
+#     os.makedirs(path)
 
-file_path = os.path.join(path, 'count.txt')
+# file_path = os.path.join(path, 'count.txt')
 
 app = Flask(__name__)
 
@@ -35,9 +35,9 @@ class Counter(db.Model):
     def __repr__(self):
         return '<Count %r>' % self.count_val
 
-def write_to_file(txt):
-    with open(file_path, "w+") as f:
-        f.write(txt)
+# def write_to_file(txt):
+#     with open(file_path, "w+") as f:
+#         f.write(txt)
 
 db.create_all()
 db.session.commit()
@@ -52,7 +52,7 @@ def index():
 
     db.session.add(c)
     db.session.commit()
-    write_to_file(str(c.count_val))
+    # write_to_file(str(c.count_val))
     return "ping / pong {}".format(c.count_val)
 
 

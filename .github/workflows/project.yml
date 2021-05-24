@@ -1,0 +1,60 @@
+name: Build and push the latest build to staging
+
+on:
+  push:
+    branches:
+      - 'aks-deploy-test'
+    paths:
+      - 'project/**'
+
+jobs:
+  build_push_image:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./project
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Docker Login, build and push to ACR
+        uses: docker/login-action@v1.8.0
+        with:
+          registry: ${{ secrets.ACR_NAME }}
+          username: ${{ secrets.ACR_LOGIN }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - run: |
+          docker build . -t ${{ secrets.ACR_NAME }}/demo-project:${{ github.sha }}
+          docker push ${{ secrets.ACR_NAME }}/demo-project:${{ github.sha }}
+          
+          
+      
+      - name: Set the target AKS cluster
+        uses: Azure/aks-set-context@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          cluster-name: AKSClustermk
+          resource-group: ResourceGroupDemo
+
+      - uses: Azure/k8s-create-secret@v1
+        with:
+          container-registry-url: ${{ secrets.ACR_NAME }}
+          container-registry-username: ${{ secrets.ACR_LOGIN }}
+          container-registry-password: ${{ secrets.ACR_PASSWORD }}
+          secret-name: k8s-secret
+          
+      - uses: Azure/k8s-deploy@v1
+        with:
+          manifests: |
+            ./project/manifest/flask-app-test.yaml
+            ./project/manifest/postgres/postgres-secret.yaml
+            ./project/manifest/postgres/postgres.yaml
+          images: |
+            acrmk.azurecr.io/demo-project:${{ github.sha }}
+            postgres:latest
+          imagepullsecrets: |
+            k8s-secret

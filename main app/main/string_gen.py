@@ -9,12 +9,12 @@ from concurrent.futures import ThreadPoolExecutor
 
 app = Flask(__name__)
 
-path = os.path.join('/', 'usr', 'src' ,'app', 'files')
-if not os.path.exists(path):
-    os.makedirs(path)
+# path = os.path.join('/', 'usr', 'src' ,'app', 'files')
+# if not os.path.exists(path):
+#     os.makedirs(path)
 
 message = os.getenv('MESSAGE')
-file_path = os.path.join(path, 'count.txt')
+# file_path = os.path.join(path, 'count.txt')
 letters = string.ascii_lowercase
 logs = []
 executor = ThreadPoolExecutor(1)
@@ -27,12 +27,12 @@ def generate_random_string():
         logs.append(log)
         sleep(5)
 
-def read_file(path):
-    try:
-        with open(path, 'r') as f:
-            return f.read()
-    except FileNotFoundError:
-        return "File not found"
+# def read_file(path):
+#     try:
+#         with open(path, 'r') as f:
+#             return f.read()
+#     except FileNotFoundError:
+#         return "File not found"
 
 
 @app.route('/')
@@ -44,10 +44,10 @@ def index():
     except IndexError as error:
         return "no logs available"
 
-@app.route('/files')
-def get_files():
-    files = os.listdir(path)
-    return ''.join(files)
+# @app.route('/files')
+# def get_files():
+#     files = os.listdir(path)
+#     return ''.join(files)
 
 
 if __name__ == '__main__':
