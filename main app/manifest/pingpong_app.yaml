@@ -19,7 +19,7 @@ spec:
       #     claimName: counter-claim
       containers:
       - name: pong
-        image: acrmk.azurecr.io/demo-pinpong-app
+        image: acrmk.azurecr.io/demo-pingpong-app
         ports:
         - containerPort: 5000
         # volumeMounts:
