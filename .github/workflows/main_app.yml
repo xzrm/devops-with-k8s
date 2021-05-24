@@ -28,15 +28,11 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
 
       - run: |
-          cd ./main
-          docker build . -t ${{ secrets.ACR_NAME }}/demo-main-app:${{ github.sha }}
-          docker push ${{ secrets.ACR_NAME }}/demo-main-app:${{ github.sha }}
-          cd ..
-
-          cd ./pingpong
-          docker build . -t ${{ secrets.ACR_NAME }}/demo-string-gen:${{ github.sha }}
+          docker build . -t ${{ secrets.ACR_NAME }}/demo-string-gen:${{ github.sha }} -f ./main/Dockerfile
           docker push ${{ secrets.ACR_NAME }}/demo-string-gen:${{ github.sha }}
-          cd ..
+
+          docker build . -t ${{ secrets.ACR_NAME }}/demo-pingpong-app:${{ github.sha }} -f ./pingpong/Dockerfile
+          docker push ${{ secrets.ACR_NAME }}/demo-pingpong-app:${{ github.sha }}
       
       - name: Set the target AKS cluster
         uses: Azure/aks-set-context@v1
@@ -62,7 +58,7 @@ jobs:
             './main app/manifest/main_app.yaml' 
 
           images: |
-            acrmk.azurecr.io/demo-main-app:${{ github.sha }}
+            acrmk.azurecr.io/demo-pingpong-app:${{ github.sha }}
             acrmk.azurecr.io/demo-string-gen:${{ github.sha }}
           imagepullsecrets: |
             k8s-secret
