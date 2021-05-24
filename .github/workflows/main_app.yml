@@ -5,7 +5,7 @@ on:
     branches:
       - 'aks-deploy-test'
     paths:
-      - 'main/**'
+      - 'main app/**'
 
 jobs:
   build_push_image:
