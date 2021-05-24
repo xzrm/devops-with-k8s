@@ -28,11 +28,14 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
 
       - run: |
-          docker build . -t ${{ secrets.ACR_NAME }}/demo-string-gen:${{ github.sha }} -f ./main/Dockerfile
+          cd ./main
+          docker build . -t ${{ secrets.ACR_NAME }}/demo-string-gen:${{ github.sha }}
           docker push ${{ secrets.ACR_NAME }}/demo-string-gen:${{ github.sha }}
-
-          docker build . -t ${{ secrets.ACR_NAME }}/demo-pingpong-app:${{ github.sha }} -f ./pingpong/Dockerfile
+          cd ..
+          cd ./pingpong
+          docker build . -t ${{ secrets.ACR_NAME }}/demo-pingpong-app:${{ github.sha }} 
           docker push ${{ secrets.ACR_NAME }}/demo-pingpong-app:${{ github.sha }}
+          cd ..
       
       - name: Set the target AKS cluster
         uses: Azure/aks-set-context@v1
