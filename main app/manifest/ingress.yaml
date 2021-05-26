@@ -23,11 +23,11 @@
 #             port:
 #               number: 8000
 
-  
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hello-world-ingress
+  name: main-app-ingress
   namespace: ingress-basic
   annotations:
     kubernetes.io/ingress.class: nginx
