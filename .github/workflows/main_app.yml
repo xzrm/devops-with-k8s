@@ -78,6 +78,7 @@ jobs:
         run: |
           helm upgrade nginx-ingress ingress-nginx/ingress-nginx \
             --install \
+            --namespace "default" \
             --set controller.replicaCount=1 \
             --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
             --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux \

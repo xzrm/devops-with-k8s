@@ -39,7 +39,10 @@ spec:
   selector:
     app: pong
   # type:  LoadBalancer
+  # ports:
+  # - protocol: TCP
+  #   port: 8000
+  #   targetPort: 5000
   type: ClusterIP
   ports:
   - port: 5000
-    # targetPort: 5000

@@ -40,6 +40,10 @@ spec:
   selector:
     app: string-gen
   # type:  LoadBalancer
+  # ports:
+  # - protocol: TCP
+  #   port: 8000
+  #   targetPort: 5000
   type: ClusterIP
   ports:
   - port: 5000
