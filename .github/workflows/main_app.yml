@@ -80,7 +80,8 @@ jobs:
 
       - name: Run Helm Deploy
         run: |
-          helm install nginx-ingress ingress-nginx/ingress-nginx \
+          helm upgrade nginx-ingress ingress-nginx/ingress-nginx \
+            --install \
             --namespace ingress-basic \
             --set controller.replicaCount=1 \
             --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
