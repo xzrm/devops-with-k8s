@@ -1,9 +1,39 @@
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: main-app-ingress
+#   annotations:
+#     traefik.ingress.kubernetes.io/rule-type: PathPrefixStrip
+# spec:
+#   rules:
+#   - http:
+#       paths:
+#       - path: /
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: main-app-service
+#             port:
+#               number: 8000
+#       - path: /pong
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: pong-app-service
+#             port:
+#               number: 8000
+
+  
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: main-app-ingress
+  name: hello-world-ingress
+  namespace: ingress-basic
   annotations:
-    traefik.ingress.kubernetes.io/rule-type: PathPrefixStrip
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
   - http:
