@@ -65,3 +65,26 @@ jobs:
             acrmk.azurecr.io/demo-string-gen:${{ github.sha }}
           imagepullsecrets: |
             k8s-secret
+
+            - name: Install Helm
+      
+      - uses: Azure/setup-helm@v1
+        with:
+          version: v3.3.1
+      
+      - name: New ns
+        run: |
+          kubectl create namespace ingress-basic
+
+      - name: Add repo
+        run: |
+          helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+
+      - name: Run Helm Deploy
+        run: |
+          helm install nginx-ingress ingress-nginx/ingress-nginx \
+            --namespace ingress-basic \
+            --set controller.replicaCount=1 \
+            --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
+            --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux \
+            --set controller.admissionWebhooks.patch.nodeSelector."beta\.kubernetes\.io/os"=linux
