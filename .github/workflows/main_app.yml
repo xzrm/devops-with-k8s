@@ -70,6 +70,7 @@ jobs:
         with:
           version: v3.3.1
 
+
       - name: Add repo
         run: |
           helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
@@ -78,7 +79,7 @@ jobs:
         run: |
           helm upgrade nginx-ingress ingress-nginx/ingress-nginx \
             --install \
-            --namespace "default" \
+            --namespace ingress-basic \
             --set controller.replicaCount=1 \
             --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
             --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux \
