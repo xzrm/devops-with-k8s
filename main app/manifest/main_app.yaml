@@ -39,8 +39,7 @@ metadata:
 spec:
   selector:
     app: string-gen
-  type:  LoadBalancer
+  # type:  LoadBalancer
+  type: ClusterIP
   ports:
-  - protocol: TCP
-    port: 8000
-    targetPort: 5000
+  - port: 5000

@@ -69,10 +69,6 @@ jobs:
       - uses: Azure/setup-helm@v1
         with:
           version: v3.3.1
-      
-      # - name: New ns
-      #   run: |
-      #     kubectl create namespace ingress-basic
 
       - name: Add repo
         run: |
