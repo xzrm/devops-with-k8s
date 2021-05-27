@@ -20,14 +20,15 @@ spec:
       containers:
       - name: pong
         image: acrmk.azurecr.io/demo-pingpong-app
-        ports:
-        - containerPort: 5000
         readinessProbe:
           initialDelaySeconds: 10 # Initial delay until the readiness is tested
           periodSeconds: 5 # How often to test
           httpGet:
-            path: /healthz
-            port: 5000
+             path: /healthz
+             port: 3541
+        ports:
+        - containerPort: 5000
+
         # volumeMounts:
         # - mountPath: /usr/src/app/files
         #   name: shared-counter

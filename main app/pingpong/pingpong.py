@@ -45,7 +45,7 @@ class Counter(db.Model):
 db.create_all()
 db.session.commit()
 
-@app.route('/heathz')
+@app.route('/healthz')
 def healthcheck():
     try:
         c = Counter.query.one()
