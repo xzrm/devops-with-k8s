@@ -2,6 +2,7 @@ from flask import Flask
 import os
 from pathlib import Path
 from flask_sqlalchemy import SQLAlchemy
+from flask import abort
 import sys
 import logging
 
@@ -43,6 +44,16 @@ class Counter(db.Model):
 
 db.create_all()
 db.session.commit()
+
+@app.route('/heathz')
+def healthcheck():
+    try:
+        c = Counter.query.one()
+        if c:
+            return "OK"
+    except Exception as e:
+        abort(500)
+
 
 @app.route('/')
 def index():
