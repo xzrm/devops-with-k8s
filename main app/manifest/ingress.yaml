@@ -50,3 +50,4 @@ spec:
             name: pong-app-service
             port:
               number: 8000
+
