@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: pong-app
 spec:
-  replicas: 1
+  replicas: 2
   selector: #matches all labels app: xxx to create connection (i.e. selectors match with labels)
     matchLabels:
       app: pong
@@ -20,12 +20,12 @@ spec:
       containers:
       - name: pong
         image: acrmk.azurecr.io/demo-pingpong-app
-        # readinessProbe:
-        #   initialDelaySeconds: 10 # Initial delay until the readiness is tested
-        #   periodSeconds: 5 # How often to test
-        #   httpGet:
-        #      path: /healthz
-        #      port: 5000
+        readinessProbe:
+          initialDelaySeconds: 10 # Initial delay until the readiness is tested
+          periodSeconds: 5 # How often to test
+          httpGet:
+             path: /
+             port: 5000
         ports:
         - containerPort: 5000
 
