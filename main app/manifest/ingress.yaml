@@ -43,7 +43,7 @@ spec:
             name: main-app-service
             port:
               number: 8000
-      - path: /pong(.*)
+      - path: /pong/(.*)
         pathType: Prefix
         backend:
           service:
