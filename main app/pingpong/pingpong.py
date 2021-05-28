@@ -47,13 +47,12 @@ db.session.commit()
 
 @app.route('/healthz')
 def healthcheck():
-    abort(500)
-#     try:
-#         c = Counter.query.one()
-#         if c:
-#             return "OK"
-#     except Exception as e:
-#         abort(500)
+    try:
+        c = Counter.query.one()
+        if c:
+            return "OK"
+    except Exception as e:
+        abort(500)
 
 
 @app.route('/')
