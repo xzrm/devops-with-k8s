@@ -5,4 +5,4 @@ resources:
 images:
 - name: IMAGE_PLACEHOLDER
   newName: xzarem/dwk-4-gitops-app
-  newTag: f620c12f423e79e7f1c1ad7e4a208c885b1b1750
+  newTag: 0278933af6e6a954f4b0ca5b02bc6d4d3bd7d1f5
