@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  # namespace: todo-app
+  labels:
+    app: frontend-app
+spec:
+  replicas: 1
+  selector: #matches all labels app: xxx to create connection (i.e. selectors match with labels)
+    matchLabels:
+      app: frontend-app
+  # config for a pod
+  template:
+    metadata:
+      labels:
+        app: frontend-app
+    spec: 
+      containers:
+      - name: frontend-app
+        image: xzarem/frontend-app@sha256:1ecb892f19cdfa386af2424ba508e6c7f4bc2da3134faf162eef960ea96d969a
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-app-svc
+spec:
+  selector:
+    app: frontend-app
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000

@@ -18,7 +18,7 @@ spec:
     spec: 
       containers:
       - name: flask-app
-        image: xzarem/flask-app@sha256:3807a7a272affb9a004774f3e818b095199222db11afaf1b51d82eb64069c1bc
+        image: xzarem/flask-app@sha256:imageTag
         ports:
         - containerPort: 5000
         envFrom:

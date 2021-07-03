@@ -20,6 +20,18 @@ spec:
       containers:
       - name: pong
         image: xzarem/pong@sha256:d5429bfc2c0d17a0c1fd3137be1eb7a9a6603dc4fad6c197e5faa512fcfa6db0
+        readinessProbe:
+          initialDelaySeconds: 10 
+          periodSeconds: 5 
+          httpGet:
+             path: /
+             port: 5000
+        livenessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 5 
+          httpGet:
+             path: /
+             port: 5000
         ports:
         - containerPort: 5000
         volumeMounts:

@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+
+  nginx: 
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8000:80
+    depends_on: 
+      - backend
+      - frontend
+
+  frontend:
+    build:
+      context: ./frontend-app
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on: 
+      - backend
+
+  backend:
+    build:
+      context: ./backend-app
+      dockerfile: Dockerfile
+    command: python manage.py run -h 0.0.0.0
+    ports:
+      - 5000:5000
+    env_file:
+      - ./backend-app/.env.dev
+    depends_on:
+      - db
+      - nats
+
+  broadcaster:
+    build:
+      context: ./broadcaster
+      dockerfile: Dockerfile
+    command: python broadcaster.py
+    env_file:
+      - ./broadcaster/.env.dev
+    depends_on:
+      - nats
+    
+  db:
+    image: postgres:alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=flask_db
+
+  nats:
+    image: nats:latest
+    expose:
+      - "4222"
+    ports:
+      - 4222:4222
+
+volumes:
+  postgres_data:
