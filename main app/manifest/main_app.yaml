@@ -19,7 +19,19 @@ spec:
           claimName: counter-claim
       containers:
       - name: string-gen
-        image: xzarem/string-gen:1234
+        image: xzarem/string-gen@sha256:c7bc4ec5c6bf532201ad3f2e7908878554caa61c02e968d8473f71534e0a9a22
+        readinessProbe:
+          initialDelaySeconds: 10 
+          periodSeconds: 5 
+          httpGet:
+             path: /
+             port: 5000
+        livenessProbe:
+          initialDelaySeconds: 20 
+          periodSeconds: 5 
+          httpGet:
+             path: /
+             port: 5000
         ports:
         - containerPort: 5000
         volumeMounts:
@@ -37,6 +49,7 @@ kind: Service
 metadata:
   name: main-app-service
 spec:
+  type: ClusterIP
   selector:
     app: string-gen
   ports:

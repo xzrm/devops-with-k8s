@@ -3,7 +3,8 @@ kind: Ingress
 metadata:
   name: main-app-ingress
   annotations:
-    traefik.ingress.kubernetes.io/rule-type: PathPrefixStrip
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/rule-type: "PathPrefixStrip"
 spec:
   rules:
   - http:
