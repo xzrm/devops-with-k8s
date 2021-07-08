@@ -1,26 +1,21 @@
 import os
-
 from flask import (
     Flask,
     request,
     jsonify,
     abort,
     Response,
-    g
 )
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import json
-import asyncio
-from nats.aio.client import Client as NATS
-from nats.aio.errors import ErrConnectionClosed
 from typing import Dict
-import signal
+import pika
+
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
 app.config.from_object("project.config.Config")
-
 CORS(app)
 
 
@@ -41,13 +36,6 @@ class Todo(db.Model):
         return '<Todo {}, is done? {}>'.format(self.task, self.is_completed)
 
 
-@app.teardown_appcontext
-def shutdown_session(error):
-    db.session.remove()
-    if error:
-        print(error)
-
-
 @app.route('/todo')
 def get_todos():
     todos = db.session.query(Todo).all()
@@ -55,59 +43,47 @@ def get_todos():
 
 
 @app.route('/todo', methods=['POST'])
-async def create_todo():
+def create_todo():
     if request.method == 'POST':
         if not request.json or not 'task' in request.json:
             abort(400)
         todo = Todo(request.json['task'])
         db.session.add(todo)
         db.session.commit()
-        await send_status_message({"type": "ADD", **todo.as_dict()})
+        send_status_message({"type": "ADD", **todo.as_dict()})
         return jsonify(todo.as_dict()), 201
 
 
 @app.route('/todo/<int:id>', methods=['GET', 'PUT', 'DELETE'])
-async def get_or_update_todo(id):
+def get_or_update_todo(id):
     todo = Todo.query.get_or_404(id)
 
     if request.method == 'PUT':
         todo.is_completed = not todo.is_completed
         db.session.commit()
-        await send_status_message({"type": "UPDATE", **todo.as_dict()})
+        send_status_message({"type": "UPDATE", **todo.as_dict()})
         return jsonify(todo.as_dict()), 201
 
     elif request.method == 'DELETE':
         db.session.delete(todo)
         db.session.commit()
-        await send_status_message({"type": "DELETE", **todo.as_dict()})
+        send_status_message({"type": "DELETE", **todo.as_dict()})
         return Response(status=201)
 
     return jsonify(todo.as_dict()), 201
 
+def send_status_message(msg: Dict):
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=app.config["RABBITMQ_URI"]))
+    channel = connection.channel()
+    channel.queue_declare(queue="updates", durable=True) #if Rabbitmq dies, the task is not lost
+    channel.basic_publish(
+        exchange="",
+        routing_key="updates",
+        body=json.dumps(msg).encode(),
+        properties=pika.BasicProperties(
+            delivery_mode=2,  
+        ))
 
-async def send_status_message(msg: Dict):
-    nc = NATS()
-    loop = asyncio.get_event_loop() 
-    try:
-        await nc.connect(servers=app.config['NATS_URI'],
-                        loop=loop,
-                        connect_timeout=5)
+    connection.close()
 
-    except Exception as e:
-        print(e)
-    
-    try:
-        print("sending status message")
-        await nc.publish("updates", json.dumps(msg).encode())
-    except ErrConnectionClosed:
-        print("Connection closed prematurely")
-
-    if nc.is_connected:
-        await nc.flush()
-        await nc.close()
-
-    if nc.is_closed:
-        print("Disconnected.") 
-    
-    return 1
 

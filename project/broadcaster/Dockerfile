@@ -12,6 +12,4 @@ RUN pip3 install -r requirements.txt
 EXPOSE 4222
 COPY . .
 
-# CMD ["nats-receiver.py"]
-# ENTRYPOINT ["python"]
 

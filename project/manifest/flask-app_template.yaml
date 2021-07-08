@@ -19,11 +19,19 @@ spec:
       containers:
       - name: flask-app
         image: xzarem/flask-app@sha256:imageTag
+        args:
+          - python
+          - manage.py
+          - run
+          - -h
+          - 0.0.0.0
         ports:
         - containerPort: 5000
         envFrom:
           - secretRef:
               name: postgres-secret
+          - configMapRef:
+              name: flask-app-configmap
 ---
 apiVersion: v1
 kind: Service

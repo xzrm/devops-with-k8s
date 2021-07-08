@@ -19,6 +19,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
+    environment: 
+      - REACT_APP_BACKEND_BASE_URL=http://localhost:5000/todo
     depends_on: 
       - backend
 
@@ -33,7 +35,6 @@ services:
       - ./backend-app/.env.dev
     depends_on:
       - db
-      - nats
 
   broadcaster:
     build:
@@ -43,7 +44,13 @@ services:
     env_file:
       - ./broadcaster/.env.dev
     depends_on:
-      - nats
+      - rabbitmq
+      
+  rabbitmq:
+    image: rabbitmq:3.6-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
     
   db:
     image: postgres:alpine
@@ -53,13 +60,6 @@ services:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=flask_db
-
-  nats:
-    image: nats:latest
-    expose:
-      - "4222"
-    ports:
-      - 4222:4222
 
 volumes:
   postgres_data:

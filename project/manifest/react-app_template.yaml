@@ -18,7 +18,7 @@ spec:
     spec: 
       containers:
       - name: frontend-app
-        image: xzarem/frontend-app@sha256:5d159153ad8ac7c49d3919a24ceb7aa2f396c929e15328292dfd83121105d5f5
+        image: xzarem/frontend-app@sha256:imageTag
         env:
           - name: REACT_APP_BACKEND_BASE_URL
             value: "http://localhost:8081/api/todo"

@@ -1,7 +1,6 @@
-import { requirePropFactory } from '@material-ui/core'
 import axios from 'axios'
 
-const baseUrl = "http://localhost:5000/todo"
+const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL
 
 const getAll = async () => {
     const response = await axios.get(baseUrl)
