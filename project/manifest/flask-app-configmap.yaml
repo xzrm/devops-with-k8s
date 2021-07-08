@@ -2,6 +2,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: flask-app-configmap
-  namespace: todo-app
 data:
-  user: maciejjjj
+  DB_SERVICE: 'postgres-svc.default'
+  NATS_URI: 'nats://nats-svc.default:4222'
+
+  FLASK_APP: 'project/__init__.py'
+  FLASK_ENV: 'development'
+  CLEAN_DB: 'false'
