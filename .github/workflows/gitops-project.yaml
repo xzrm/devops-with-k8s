@@ -41,7 +41,7 @@ jobs:
         context: ./project/frontend-app
         file: ./project/frontend-app/Dockerfile
         push: true
-        tags: xzarem/react-app:${{ github.sha }}
+        tags: xzarem/frontend-app:${{ github.sha }}
 
 
   deploy:
