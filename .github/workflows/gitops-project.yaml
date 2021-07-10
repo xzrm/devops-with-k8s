@@ -63,7 +63,7 @@ jobs:
       working-directory: project/manifest
       run: |-
         ./kustomize edit set image IMAGE_PLACEHOLDER=xzarem/flask-app:${{ github.sha }}
-        ./kustomize edit set image IMAGE_PLACEHOLDER_REACT=xzarem/react-app:${{ github.sha }}
+        ./kustomize edit set image IMAGE_PLACEHOLDER_REACT=xzarem/frontend-app:${{ github.sha }}
 
     # Commit and push
     - uses: EndBug/add-and-commit@v5
