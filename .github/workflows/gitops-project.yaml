@@ -35,13 +35,13 @@ jobs:
         push: true
         tags: xzarem/flask-app:${{ github.sha }}
 
-    - name: Build and push
-      uses: docker/build-push-action@v2
-      with:
-        context: ./project/frontend-app
-        file: ./Dockerfile
-        push: true
-        tags: xzarem/react-app:${{ github.sha }}
+    # - name: Build and push
+    #   uses: docker/build-push-action@v2
+    #   with:
+    #     context: ./project/frontend-app
+    #     file: ./Dockerfile
+    #     push: true
+    #     tags: xzarem/react-app:${{ github.sha }}
 
 
 
