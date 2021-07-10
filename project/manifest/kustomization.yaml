@@ -11,16 +11,8 @@ resources:
 - ingress.yaml
 images:
 - name: IMAGE_PLACEHOLDER
+  newName: xzarem/flask-app
+  newTag: 475daf39099f2d69f1cedc875a69085c96250f3c
 - name: IMAGE_PLACEHOLDER_REACT
-
-# patchesStrategicMerge:
-#   - config-patch.yaml
-    
-# configMapGenerator:
-#   - name: test-config
-#     envs:
-#       - myconfig.env
-# secretGenerator:
-#   - name: mysecrets
-#     envs:
-#       - myconfig.env
+  newName: xzarem/react-app
+  newTag: 475daf39099f2d69f1cedc875a69085c96250f3c
