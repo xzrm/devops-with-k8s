@@ -7,7 +7,7 @@ on:
       - local-v1
     paths:
       - 'project/**'
-      - '.github/workflows/gitops-project.yml'
+      - '.github/workflows/gitops-project.yaml'
 
 jobs:
   build:
