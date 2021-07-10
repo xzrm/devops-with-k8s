@@ -57,15 +57,18 @@ jobs:
       run: |-
         curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
         chmod u+x ./kustomize
-    # # Update yamls
-    # - name: Update yamls
-    #   working-directory: 4-gitops/manifests
-    #   run: |-
-    #     ./kustomize edit set image IMAGE_PLACEHOLDER=xzarem/dwk-4-gitops-app:${{ github.sha }}
-  #   # Commit and push
-  #   - uses: EndBug/add-and-commit@v5
-  #     with:
-  #       add: '4-gitops/manifests/kustomization.yaml'
-  #       message: New version release for gitops-app ${{ github.sha }}
-  #     env:
-  #       GITHUB_TOKEN: ${{ secrets.API_GITHUB_TOKEN }}
+
+    # Update yamls
+    - name: Update yamls
+      working-directory: project/manifest
+      run: |-
+        ./kustomize edit set image IMAGE_PLACEHOLDER=xzarem/flask-app:${{ github.sha }}
+        ./kustomize edit set image IMAGE_PLACEHOLDER_REACT=xzarem/react-app:${{ github.sha }}
+
+    # Commit and push
+    - uses: EndBug/add-and-commit@v5
+      with:
+        add: 'project/manifest/kustomization.yaml'
+        message: New version release for gitops-app ${{ github.sha }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.API_GITHUB_TOKEN }}
