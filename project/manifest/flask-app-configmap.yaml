@@ -4,8 +4,7 @@ metadata:
   name: flask-app-configmap
 data:
   DB_SERVICE: 'postgres-svc.default'
-  NATS_URI: 'rabbitmq.default:5672'
-
+  RABBITMQ_URI: 'http://rabbitmq-svc.default'
   FLASK_APP: 'project/__init__.py'
   FLASK_ENV: 'development'
   CLEAN_DB: 'false'

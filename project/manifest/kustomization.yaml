@@ -2,13 +2,17 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - postgres-secret.yaml
-# - postgres-storage.yaml
 - postgres.yaml
-# - flask-app.yaml
-# images:
-# - name: IMAGE_PLACEHOLDER
-#   newName: test/test
-  
+- rabbitmq.yaml
+- flask-app-configmap.yaml
+- flask-app-secret.yaml
+- flask-app.yaml
+- react-app.yaml
+- ingress.yaml
+images:
+- name: IMAGE_PLACEHOLDER
+- name: IMAGE_PLACEHOLDER_REACT
+
 # patchesStrategicMerge:
 #   - config-patch.yaml
     
