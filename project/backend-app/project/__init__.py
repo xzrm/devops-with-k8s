@@ -50,7 +50,7 @@ def create_todo():
         todo = Todo(request.json['task'])
         db.session.add(todo)
         db.session.commit()
-        # send_status_message({"type": "ADD", **todo.as_dict()})
+        send_status_message({"type": "ADD", **todo.as_dict()})
         return jsonify(todo.as_dict()), 201
 
 
@@ -61,13 +61,13 @@ def get_or_update_todo(id):
     if request.method == 'PUT':
         todo.is_completed = not todo.is_completed
         db.session.commit()
-        # send_status_message({"type": "UPDATE", **todo.as_dict()})
+        send_status_message({"type": "UPDATE", **todo.as_dict()})
         return jsonify(todo.as_dict()), 201
 
     elif request.method == 'DELETE':
         db.session.delete(todo)
         db.session.commit()
-        # send_status_message({"type": "DELETE", **todo.as_dict()})
+        send_status_message({"type": "DELETE", **todo.as_dict()})
         return Response(status=201)
 
     return jsonify(todo.as_dict()), 201

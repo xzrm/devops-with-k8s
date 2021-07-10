@@ -14,5 +14,5 @@ images:
   newName: xzarem/flask-app
   newTag: bec43194d7a71e3953a59b7b1fecdea9784461bb
 - name: IMAGE_PLACEHOLDER_REACT
-  newName: xzarem/react-app
+  newName: xzarem/frontend-app
   newTag: bec43194d7a71e3953a59b7b1fecdea9784461bb
