@@ -30,8 +30,8 @@ jobs:
       id: docker_build
       uses: docker/build-push-action@v2
       with:
-        context: ./
-        file: ./project/backend-app/Dockerfile
+        context: ./project/backend-app
+        file: ./Dockerfile
         push: true
         tags: xzarem/flask-app:${{ github.sha }}
 
