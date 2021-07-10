@@ -7,4 +7,4 @@ data:
   RABBITMQ_URI: 'http://rabbitmq-svc.default'
   FLASK_APP: 'project/__init__.py'
   FLASK_ENV: 'development'
-  CLEAN_DB: 'false'
+  CLEAN_DB: 'true'
