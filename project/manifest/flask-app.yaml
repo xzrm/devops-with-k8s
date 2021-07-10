@@ -19,7 +19,7 @@ spec:
       containers:
       - name: flask-app
         image: xzarem/flask-app@sha256:8bff5d7ac4cccd9f16fc68d5035fe9dcdb67a73c35386737fac489664c06445c
-        args:
+        args: 
           - python
           - manage.py
           - run
