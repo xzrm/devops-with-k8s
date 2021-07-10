@@ -35,34 +35,33 @@ jobs:
         push: true
         tags: xzarem/flask-app:${{ github.sha }}
 
-    # - name: Build and push
-    #   uses: docker/build-push-action@v2
-    #   with:
-    #     context: ./project/frontend-app
-    #     file: ./Dockerfile
-    #     push: true
-    #     tags: xzarem/react-app:${{ github.sha }}
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: ./project/frontend-app
+        file: ./project/frontend-app/Dockerfile
+        push: true
+        tags: xzarem/react-app:${{ github.sha }}
 
 
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
 
-  # deploy:
-  #   name: Deploy
-  #   runs-on: ubuntu-latest
-  #   needs: build
+    steps:
+    - uses: actions/checkout@v2
 
-  #   steps:
-  #   - uses: actions/checkout@v2
-
-  #   - name: Set up Kustomize
-  #     working-directory: 4-gitops/manifests
-  #     run: |-
-  #       curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
-  #       chmod u+x ./kustomize
-  #   # Update yamls
-  #   - name: Update yamls
-  #     working-directory: 4-gitops/manifests
-  #     run: |-
-  #       ./kustomize edit set image IMAGE_PLACEHOLDER=xzarem/dwk-4-gitops-app:${{ github.sha }}
+    - name: Set up Kustomize
+      working-directory: project/manifests
+      run: |-
+        curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
+        chmod u+x ./kustomize
+    # # Update yamls
+    # - name: Update yamls
+    #   working-directory: 4-gitops/manifests
+    #   run: |-
+    #     ./kustomize edit set image IMAGE_PLACEHOLDER=xzarem/dwk-4-gitops-app:${{ github.sha }}
   #   # Commit and push
   #   - uses: EndBug/add-and-commit@v5
   #     with:
