@@ -73,6 +73,7 @@ def get_or_update_todo(id):
     return jsonify(todo.as_dict()), 201
 
 def send_status_message(msg: Dict):
+    print("Connecting to ", app.config["RABBITMQ_URI"])
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=app.config["RABBITMQ_URI"]))
     channel = connection.channel()
     channel.queue_declare(queue="updates", durable=True) #if Rabbitmq dies, the task is not lost
