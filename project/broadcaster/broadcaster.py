@@ -7,6 +7,8 @@ import time
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 CHAT_ID = os.getenv('CHAT_ID')
 
+print(os.getenv("RABBITMQ_URI"))
+
 #  https://api.telegram.org/bot<YourBOTToken>/getUpdates
 def main():
     sleepTime = 10
