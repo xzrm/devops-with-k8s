@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broadcaster
+  labels:
+    app: broadcaster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: broadcaster
+  template:
+    metadata:
+      labels:
+        app: broadcaster
+    spec:
+      containers:
+        - name: broadcaster
+          image: xzarem/broadcaster@sha256:ce1b41d5d8898f46f0862abeca576869e965898ce69596abbb0b0159ede81911
+          args:
+            - python
+            - broadcaster.py
+          ports:
+            - containerPort: 5000
+          env:
+            - name: RABBITMQ_URI
+              value: rabbitmq
+          envFrom:
+            - secretRef:
+                name: broadcaster-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: broadcaster-svc
+spec:
+  selector:
+    app: broadcaster
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 5000
