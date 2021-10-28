@@ -24,4 +24,5 @@ yarn-error.log*
 
 env/
 .env.dev
-.vscode
+.vscode/
+__pycache__/

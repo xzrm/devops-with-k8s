@@ -8,3 +8,4 @@ data:
   FLASK_ENV: 'development'
   CLEAN_DB: 'true'
   RABBITMQ_URI: rabbitmq
+  NATS_URI: 'nats://nats:4222'

@@ -8,15 +8,16 @@ from flask import (
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import json
-from typing import Dict
-import pika
+from pynats import NATSClient
 
 
 app = Flask(__name__)
-db = SQLAlchemy(app)
 app.config.from_object("project.config.Config")
-print(app.config)
+db = SQLAlchemy(app)
+# print(app.config)
 CORS(app)
+
+
 
 
 class Todo(db.Model):
@@ -72,19 +73,26 @@ def get_or_update_todo(id):
 
     return jsonify(todo.as_dict()), 201
 
-def send_status_message(msg: Dict):
-    print("Connecting to ", app.config["RABBITMQ_URI"])
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=app.config["RABBITMQ_URI"]))
-    channel = connection.channel()
-    channel.queue_declare(queue="updates", durable=True) #if Rabbitmq dies, the task is not lost
-    channel.basic_publish(
-        exchange="",
-        routing_key="updates",
-        body=json.dumps(msg).encode(),
-        properties=pika.BasicProperties(
-            delivery_mode=2,  
-        ))
 
-    connection.close()
+def send_status_message(msg):
+    try:
+        with NATSClient(app.config["NATS_URI"], socket_timeout=2) as client:
+            client.publish("updates", payload=json.dumps(msg).encode())
+    except Exception as e:
+        print(e)
 
 
+# def send_status_message(msg: Dict):
+#     print("Connecting to ", app.config["RABBITMQ_URI"])
+#     connection = pika.BlockingConnection(pika.ConnectionParameters(host=app.config["RABBITMQ_URI"]))
+#     channel = connection.channel()
+#     channel.queue_declare(queue="updates", durable=True) #if Rabbitmq dies, the task is not lost
+#     channel.basic_publish(
+#         exchange="",
+#         routing_key="updates",
+#         body=json.dumps(msg).encode(),
+#         properties=pika.BasicProperties(
+#             delivery_mode=2,  
+#         ))
+
+#     connection.close()
