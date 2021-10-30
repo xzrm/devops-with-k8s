@@ -16,15 +16,12 @@ spec:
     spec:
       containers:
         - name: broadcaster
-          image: xzarem/broadcaster@sha256:ce1b41d5d8898f46f0862abeca576869e965898ce69596abbb0b0159ede81911
-          args:
-            - python
-            - broadcaster.py
+          image: xzarem/async-broadcaster@sha256:d9f13b258004dbff02d26e5f83997235df940a35206ddf80d061b3e8dae055dc
           ports:
             - containerPort: 5000
           env:
-            - name: RABBITMQ_URI
-              value: rabbitmq
+            - name: NATS_URL            
+              value: nats://nats:4222
           envFrom:
             - secretRef:
                 name: broadcaster-secret

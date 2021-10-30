@@ -2,10 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - postgres-secret.yaml
-- broadcaster-secret.yaml
+- sealed-secret-async-broadcaster.yaml
 - postgres.yaml
-- rabbitmq.yaml
-- broadcaster.yaml
+- nats.yaml
+- async-broadcaster.yaml
 - flask-app-configmap.yaml
 - flask-app-secret.yaml
 - flask-app.yaml
@@ -14,7 +14,7 @@ resources:
 images:
 - name: IMAGE_PLACEHOLDER
   newName: xzarem/flask-app
-  newTag: f9e4590f9fb9b19af2fa942536fb1ebef10eec63
+  newTag: v2
 - name: IMAGE_PLACEHOLDER_REACT
   newName: xzarem/frontend-app
   newTag: f9e4590f9fb9b19af2fa942536fb1ebef10eec63

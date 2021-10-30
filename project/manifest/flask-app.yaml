@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app
-  # namespace: todo-app
   labels:
     app: flask-app
 spec:
@@ -18,7 +17,7 @@ spec:
     spec: 
       containers:
       - name: flask-app
-        # image: xzarem/flask-app@sha256:8bff5d7ac4cccd9f16fc68d5035fe9dcdb67a73c35386737fac489664c06445c
+        # image: xzarem/flask-app@sha256:5593beb02b9736cc0b8e53b45a262df433eeabc92de058b473c1ee25955c9984
         image: IMAGE_PLACEHOLDER
         args: 
           - python
@@ -38,7 +37,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: flask-app-svc
-  # namespace: todo-app
 spec:
   selector:
     app: flask-app

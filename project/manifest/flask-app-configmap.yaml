@@ -7,5 +7,4 @@ data:
   FLASK_APP: 'project/__init__.py'
   FLASK_ENV: 'development'
   CLEAN_DB: 'true'
-  RABBITMQ_URI: rabbitmq
   NATS_URI: 'nats://nats:4222'
