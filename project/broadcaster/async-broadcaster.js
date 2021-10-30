@@ -1,6 +1,6 @@
 // const lo = require('lodash')
-import { connect, JSONCodec } from "nats";
-import { get } from 'axios';
+const { connect, JSONCodec } = require("nats");
+const { get } = require("axios");
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 const CHAT_ID = process.env.CHAT_ID;

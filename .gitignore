@@ -26,3 +26,7 @@ env/
 .env.dev
 .vscode/
 __pycache__/
+
+
+#selected manifest secrets
+./manifest/broadcaster-secret.yaml
