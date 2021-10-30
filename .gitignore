@@ -29,4 +29,4 @@ __pycache__/
 
 
 #selected manifest secrets
-./manifest/broadcaster-secret.yaml
+/broadcaster-secret.yaml
