@@ -18,3 +18,6 @@ images:
 - name: IMAGE_PLACEHOLDER_REACT
   newName: xzarem/frontend-app
   newTag: f9e4590f9fb9b19af2fa942536fb1ebef10eec63
+- name: IMAGE_PLACEHOLDER_BROADCASTER
+  newName: xzarem/async-broadcaster
+  newTag: d9f13b258004dbff02d26e5f83997235df940a35206ddf80d061b3e8dae055dc
