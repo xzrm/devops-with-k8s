@@ -20,4 +20,4 @@ images:
   newTag: f9e4590f9fb9b19af2fa942536fb1ebef10eec63
 - name: IMAGE_PLACEHOLDER_BROADCASTER
   newName: xzarem/async-broadcaster
-  newTag: latest1
+  newTag: latest
