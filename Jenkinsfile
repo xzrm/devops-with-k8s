@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage("Building Docker Image"){
             steps{
-                dir("${WORKSPACE}/main app/main") {
+                dir("${WORKSPACE}/side-app/main") {
                     sh "pwd"
                     sh "docker build . -t xzarem/string-gen:${env.GIT_COMMIT}" 
                  }
@@ -19,7 +19,7 @@ pipeline {
         }
         stage("Deploy to k8s"){
             steps{
-                dir("${WORKSPACE}/main app/manifest") {
+                dir("${WORKSPACE}/side-app/manifest") {
                     sh "chmod +x changeTag.sh"
                     sh "./changeTag.sh ${env.GIT_COMMIT}"
                     sh "kubectl apply -f main_app.yaml"

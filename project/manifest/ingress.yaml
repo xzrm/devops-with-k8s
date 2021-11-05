@@ -1,18 +1,30 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
 metadata:
-  name: main-app-ingress
-  namespace: todo-app
-  annotations:
-    traefik.ingress.kubernetes.io/rule-type: PathPrefixStrip
+  name: stripprefix
 spec:
-  rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: flask-app-svc
-            port:
-              number: 8000
+  stripPrefix:
+    prefixes:
+      - /api
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: foo
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: frontend-app-svc
+      port: 3000
+  - match: PathPrefix(`/api`)
+    kind: Rule
+    services:
+    - name: flask-app-svc
+      port: 8000
+    middlewares:
+    - name: stripprefix

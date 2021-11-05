@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broadcaster
+  labels:
+    app: broadcaster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: broadcaster
+  template:
+    metadata:
+      labels:
+        app: broadcaster
+    spec:
+      containers:
+        - name: broadcaster
+          # image: xzarem/async-broadcaster@sha256:d9f13b258004dbff02d26e5f83997235df940a35206ddf80d061b3e8dae055dc
+          image: IMAGE_PLACEHOLDER_BROADCASTER
+          ports:
+            - containerPort: 5000
+          env:
+            - name: NATS_URL            
+              value: nats://nats:4222
+          envFrom:
+            - secretRef:
+                name: broadcaster-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: broadcaster-svc
+spec:
+  selector:
+    app: broadcaster
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 5000

@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: string-gen
+spec:
+  replicas: 1
+  selector: #matches all labels app: xxx to create connection (i.e. selectors match with labels)
+    matchLabels:
+      app: string-gen
+  # config for a pod
+  template:
+    metadata:
+      labels:
+        app: string-gen
+    spec: 
+      volumes:
+      - name: shared-counter
+        persistentVolumeClaim:
+          claimName: counter-claim
+      containers:
+      - name: string-gen
+        image: xzarem/string-gen@sha256:c7bc4ec5c6bf532201ad3f2e7908878554caa61c02e968d8473f71534e0a9a22
+        readinessProbe:
+          initialDelaySeconds: 10 
+          periodSeconds: 5 
+          httpGet:
+             path: /
+             port: 5000
+        livenessProbe:
+          initialDelaySeconds: 20 
+          periodSeconds: 5 
+          httpGet:
+             path: /
+             port: 5000
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - mountPath: /usr/src/app/files
+          name: shared-counter
+        env:
+        - name: MESSAGE
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: message
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: main-app-service
+spec:
+  type: ClusterIP
+  selector:
+    app: string-gen
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 5000
