@@ -25,3 +25,7 @@ yarn-error.log*
 env/
 .env.dev
 .vscode
+__pycache__/
+
+#selected manifest secrets
+project/manifest/broadcaster-secret.yaml
