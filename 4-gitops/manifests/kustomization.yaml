@@ -1,8 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-- deployment.yaml
-images:
-- name: IMAGE_PLACEHOLDER
-  newName: xzarem/dwk-4-gitops-app
-  newTag: 23730860396ec4a31a2a16d079d702ba095b485a
