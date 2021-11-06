@@ -14,6 +14,7 @@ resources:
 - flask-app.yaml
 - react-app.yaml
 - ingress.yaml
+- ns-prometheus-grafana.yaml
 images:
 - name: IMAGE_PLACEHOLDER
   newName: xzarem/flask-app
