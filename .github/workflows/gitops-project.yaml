@@ -4,7 +4,7 @@ name: Release project app
 on:
   push:
     branches:
-      - local-v1
+      - local-v2
     paths:
       - 'project/**'
       - '.github/workflows/gitops-project.yaml'
