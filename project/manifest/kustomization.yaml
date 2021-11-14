@@ -17,10 +17,10 @@ resources:
 images:
 - name: IMAGE_PLACEHOLDER
   newName: xzarem/flask-app
-  newTag: 4a14901be4aaebeaf67444793422fd176f383cca
+  newTag: 80d23fcc273abcde102a52aec1c9a63f18a6322b
 - name: IMAGE_PLACEHOLDER_BROADCASTER
   newName: xzarem/async-broadcaster
   newTag: latest
 - name: IMAGE_PLACEHOLDER_REACT
   newName: xzarem/frontend-app
-  newTag: 4a14901be4aaebeaf67444793422fd176f383cca
+  newTag: 80d23fcc273abcde102a52aec1c9a63f18a6322b
