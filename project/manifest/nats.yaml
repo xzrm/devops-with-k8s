@@ -6,10 +6,9 @@ metadata:
     app: nats
 spec:
   replicas: 1
-  selector: #matches all labels app: xxx to create connection (i.e. selectors match with labels)
+  selector:
     matchLabels:
       app: nats
-  # config for a pod
   template:
     metadata:
       labels:

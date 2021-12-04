@@ -1,7 +1,8 @@
 import axios from 'axios'
+import Config  from '../config.json'
 
-const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL
-
+// const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL
+const baseUrl = Config.BACKEND_BASE_URL
 
 const getAll = async () => {
     const response = await axios.get(baseUrl)
