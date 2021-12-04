@@ -40,16 +40,16 @@ EXPOSE 3000
 WORKDIR /usr/share/nginx/html
 
 #this is relevanet for when there is .env file used
-COPY ./env.sh .
-COPY .env .
+# COPY ./env.sh .
+# COPY .env .
 
 #replaces env vars in minified js file
 COPY ./env_sub.sh .
 
 
 RUN chmod +x env_sub.sh 
-RUN chmod +x env.sh
+# RUN chmod +x env.sh
 
 ENV JSFOLDER=/usr/share/nginx/html/static/js/main*.js
 
-CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env_sub.sh && /usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env_sub.sh && nginx -g \"daemon off;\""]
