@@ -31,3 +31,6 @@ __pycache__/
 
 #selected manifest secrets
 project/manifest/broadcaster-secret.yaml
+
+#dummy db password for docker-compose
+project/db_password.txt
